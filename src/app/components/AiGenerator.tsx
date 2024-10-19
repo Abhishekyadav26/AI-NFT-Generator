@@ -1,8 +1,10 @@
 "use client";
-import { ConnectButton, MediaRenderer, useActiveAccount } from "thirdweb/react";
+import { ConnectButton, MediaRenderer, useActiveAccount, useReadContract } from "thirdweb/react";
 import { client } from "../client";
 import { useState } from "react";
 import { NFTCollection } from "./NFTcollection";
+import { getNFTs } from "thirdweb/extensions/erc1155";
+import { contract } from "../../../uitls/contract";
 
 export const AiGenerator = () => {
   const account = useActiveAccount();
@@ -11,6 +13,13 @@ export const AiGenerator = () => {
   const [generatedImage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
+
+  const { data: nfts , refetch} = useReadContract(
+    getNFTs,
+    {
+      contract: contract,
+    }
+  )
 
   if (account) {
     return (
@@ -120,9 +129,9 @@ export const AiGenerator = () => {
             )}
           </form>
         </div>
-        {/* <NFTCollection 
-            nfts={}
-        /> */}
+       <NFTCollection 
+            nfts={nfts!}
+        />
       </div>
     );
   }

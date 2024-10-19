@@ -24,7 +24,7 @@ export const NFTCollection = ({ nfts }: NFTCollectionProps) => {
                 flexWrap: "wrap",
                 maxWidth: "600px",
             }}>
-                {nfts.map((nft) => (
+                {nfts && nfts.length > 0 ?  nfts.map((nft) => (
                     <div style={{
                         padding: "5px",
                         width: "150px",
@@ -40,7 +40,9 @@ export const NFTCollection = ({ nfts }: NFTCollectionProps) => {
                             }}
                         />
                     </div>
-                ))}
+                )):(
+                    <p>No Nfts yet</p>
+                )}
             </div>
         </div>
     )
